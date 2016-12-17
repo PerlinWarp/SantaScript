@@ -2,6 +2,7 @@ from sys import *
 
 tokens = [] #List of tokens
 stack = []
+
 #Opens the file to be interpreted
 def open_file(filename):
 	data = open(filename, "r").read()
@@ -14,11 +15,17 @@ def lex(filecontents):
 	#EXPR is an expression 
 	#STRING is a string
 	tok = ""
+	#Strings
 	state = 0
 	string = ""
+	#Expressions and Numbers
 	expr = ""
 	isexpr = False #is this is an expression or a number? 
 	n = "" #number
+	#Variables
+	varStarted = False #To define variables 
+	var = ""
+	
 	filecontents = list(filecontents)
 	for char in filecontents:
 		tok += char #Adding every letter to token to make it make sence
@@ -36,14 +43,33 @@ def lex(filecontents):
 				#expr is a number
 				tokens.append("NUM:"+expr)
 				expr = ""
+			elif (var != ""):
+				tokens.append("VAR:" + var)
+				var = ""
+				varStarted = False
+			tok = ""
+		elif (tok == "=" and state == False):
+			if var != "":
+				tokens.append("VAR:" + var)
+				var = ""
+				varStarted = False
+			tokens.append("EQUALS")
+			tok = ""
+
+
+		elif (tok == "$" and state == False): ##
+			varStarted = True
+			var += tok
+			tok = ""
+		elif varStarted == True:
+			var += tok
 			tok = ""
 		elif (tok == "UNWRAP" or tok == "unwrap"):
-			print("Found a print")
+			#print("Found a print")
 			tokens.append("UNWRAP")
 			tok = "" ##Reset token
 		elif  (tok == "0" or tok == "1" or tok == "2" or tok == "3" or tok == "4" or tok == "5" or tok == "6" or tok == "7" or tok == "8" or tok == "9"):
 			#If the token is a number
-			print("NUMBER")
 			expr += tok
 			#tokens.append("NUMBER:" + tok + "\"")
 			tok = ""
@@ -57,7 +83,7 @@ def lex(filecontents):
 			if state == 0:
 				state = 1
 			elif state == 1:
-				print("Found a string")
+				#print("Found a string")
 				tokens.append("STRING:" + string + "\"")
 				string = ""
 				state = 0
@@ -65,9 +91,10 @@ def lex(filecontents):
 		elif state == 1: #We found a double quote 
 			string += tok
 			tok = ""
-
+	print(tokens)
+	return ""
 	#DEBUGGING
-	return tokens
+	#return tokens
 def evalExpression(expr):
 	return eval(expr)
 
