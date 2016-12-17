@@ -1,7 +1,7 @@
 from sys import *
 
 tokens = [] #List of tokens
-
+stack = []
 #Opens the file to be interpreted
 def open_file(filename):
 	data = open(filename, "r").read()
@@ -37,6 +37,11 @@ def lex(filecontents):
 				tokens.append("NUM:"+expr)
 				expr = ""
 			tok = ""
+		#elif (tok == "("):
+		#	stack.append(tok)
+		#elif (tok == ")"):
+		#	stack.append(tok)
+
 		elif (tok == "PRINT" or tok == "print"):
 			print("Found a print")
 			tokens.append("PRINT")
@@ -68,6 +73,9 @@ def lex(filecontents):
 
 	#DEBUGGING
 	return tokens
+def evalExpression(expr):
+	return eval(expr)
+
 #Gets rid of the double quote marks on what we are printing
 def doPRINT(toPRINT):
 	if(toPRINT[0:6] == "STRING"):
@@ -75,8 +83,8 @@ def doPRINT(toPRINT):
 		toPRINT = toPRINT[:-1] #To get rid of the last "
 	elif(toPRINT[0:3] == "NUM"):
 		toPRINT = toPRINT[4:]
-	elif(toPRINT[0:4 == "EXPR"]):
-		toPRINT = toPRINT[5:]
+	elif(toPRINT[0:4] == "EXPR"):
+		toPRINT = evalExpression(toPRINT[5:])
 	print(toPRINT)
 
 
