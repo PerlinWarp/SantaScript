@@ -37,14 +37,9 @@ def lex(filecontents):
 				tokens.append("NUM:"+expr)
 				expr = ""
 			tok = ""
-		#elif (tok == "("):
-		#	stack.append(tok)
-		#elif (tok == ")"):
-		#	stack.append(tok)
-
-		elif (tok == "PRINT" or tok == "print"):
+		elif (tok == "UNWRAP" or tok == "unwrap"):
 			print("Found a print")
-			tokens.append("PRINT")
+			tokens.append("UNWRAP")
 			tok = "" ##Reset token
 		elif  (tok == "0" or tok == "1" or tok == "2" or tok == "3" or tok == "4" or tok == "5" or tok == "6" or tok == "7" or tok == "8" or tok == "9"):
 			#If the token is a number
@@ -53,7 +48,7 @@ def lex(filecontents):
 			#tokens.append("NUMBER:" + tok + "\"")
 			tok = ""
 		elif (tok == "+" or tok == "-" or tok == "*" or tok == "/" or tok == ")" or tok == "("):
-			#Brakets for BidMas
+			#Brackets for BidMas
 			isexpr = True
 			expr += tok
 			tok = ""
@@ -93,7 +88,7 @@ def parse(toks):
 	print(toks)
 	i = 0 #Idk why he isnt using a for loop
 	while (i < len(toks)):
-		if(toks[i] + " " + toks[i+1][0:6] == "PRINT STRING" or toks[i] + " " + toks[i+1][0:3] == "PRINT NUM" or toks[i] + " " + toks[i+1][0:4] == "PRINT EXPR"):
+		if(toks[i] + " " + toks[i+1][0:6] == "UNWRAP STRING" or toks[i] + " " + toks[i+1][0:3] == "UNWRAP NUM" or toks[i] + " " + toks[i+1][0:4] == "UNWRAP EXPR"):
 			if(toks[i+1][0:6] == "STRING"):
 					doPRINT(toks[i+1]) #Prints the 6 character onwards
 			elif(toks[i+1][0:3]== "NUM"):
