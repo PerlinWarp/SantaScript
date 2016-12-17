@@ -1,3 +1,4 @@
-UNWRAP (10 + 2) * 4
-
-$test = "Hello"
+$variable = 10 + 3
+UNWRAP $variable
+$variable = "HELLO"
+UNWRAP $variable
