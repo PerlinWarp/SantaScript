@@ -10,6 +10,9 @@ def open_file(filename):
 
 #Lex checks for keywords, and tokens 
 def lex(filecontents):
+	#NUM is a number
+	#EXPR is an expression 
+	#STRING is a string
 	tok = ""
 	state = 0
 	string = ""
@@ -44,9 +47,10 @@ def lex(filecontents):
 			expr += tok
 			#tokens.append("NUMBER:" + tok + "\"")
 			tok = ""
-		elif tok == "+":
+		elif (tok == "+" or tok == "-" or tok == "*" or tok == "/" or tok == ")" or tok == "("):
+			#Brakets for BidMas
 			isexpr = True
-			expr += "+"
+			expr += tok
 			tok = ""
 
 		elif tok == "\"": #Found a string
@@ -63,15 +67,31 @@ def lex(filecontents):
 			tok = ""
 
 	#DEBUGGING
-	print(tokens)
 	return tokens
+#Gets rid of the double quote marks on what we are printing
+def doPRINT(toPRINT):
+	if(toPRINT[0:6] == "STRING"):
+		toPRINT = toPRINT[8:]
+		toPRINT = toPRINT[:-1] #To get rid of the last "
+	elif(toPRINT[0:3] == "NUM"):
+		toPRINT = toPRINT[4:]
+	elif(toPRINT[0:4 == "EXPR"]):
+		toPRINT = toPRINT[5:]
+	print(toPRINT)
+
+
 #Parser
 def parse(toks):
 	print(toks)
 	i = 0 #Idk why he isnt using a for loop
 	while (i < len(toks)):
-		if(toks[i] + " " + toks[i+1][0:6] == "PRINT STRING"):
-			print(toks[i+1][7:]) #Prints the 6 character onwards
+		if(toks[i] + " " + toks[i+1][0:6] == "PRINT STRING" or toks[i] + " " + toks[i+1][0:3] == "PRINT NUM" or toks[i] + " " + toks[i+1][0:4] == "PRINT EXPR"):
+			if(toks[i+1][0:6] == "STRING"):
+					doPRINT(toks[i+1]) #Prints the 6 character onwards
+			elif(toks[i+1][0:3]== "NUM"):
+					doPRINT(toks[i+1])
+			elif(toks[i+1][0:4]== "EXPR"):
+					doPRINT(toks[i+1])
 			i+=2
 
 	
