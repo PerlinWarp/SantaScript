@@ -1,5 +1,5 @@
 # SherryScript
-
+<p>
 Features:
 	unwrapping numbers, evaluations, strings. 
 	Declaring variables. 
@@ -7,7 +7,7 @@ Features:
 To add a new function. 
 1. Add a new elif statement in the Lexer
 2. Add a new if statement to parse it 
-
+</p>
 #Code examples
 ```
 $var = 1

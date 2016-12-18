@@ -149,6 +149,7 @@ def getVARIABLE(varname):
 
 #Parser
 def parse(toks):
+	print("STARTING PARSING")
 	print(toks)
 	condition = False
 	i = 0 
@@ -178,7 +179,7 @@ def parse(toks):
 					doASSIGN(toks[i], getVARIABLE(toks[i+2]))
 			i+=3 #As we used 3 tokesn
 		elif (toks[i] + " " + toks[i+1][0:3] + " " + toks[i+2] + " " + toks[i+3][0:3] + " " + toks[i + 4] == "IF NUM EQEQ NUM THEN"):
-			print("Found an if statement")
+			#print("Found an if statement")
 			#Checking if the if statement is true
 			if (toks[i+1][4:] == toks[i+3][4:]):
 				condition = True
@@ -190,8 +191,19 @@ def parse(toks):
 				i += (toks.index("ENDIF") - i)
 				print(toks.index("ENDIF"))
 			print(str(condition))
-			
-	print(symbols)
+		elif (toks[i] + " " + toks[i+1][0:3] + " " + toks[i+2] + " " + toks[i+3][0:3] + " " + toks[i + 4] == "IF VAR EQEQ NUM THEN"):
+			#print("Found an if statement")
+			#Checking if the if statement is true
+			if ((getVARIABLE(toks[i+1]))[4:] == toks[i+3][4:]):
+				condition = True
+				i += 5
+			else:
+				condition = False
+				i += (toks.index("ENDIF") - i)
+				print(toks.index("ENDIF"))
+
+	#Debugging		
+	print("SYMBOL TABLE = " + str(symbols))
 def run():
 	data = open_file(argv[1])
 	toks = lex(data) #Gets the tokens from the lex
