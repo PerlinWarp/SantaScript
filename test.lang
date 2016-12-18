@@ -3,5 +3,19 @@ if $var == 1 then
 	unwrap "True"
 elf
 	unwrap "False"
-endif
+	$eggnog = "consumed"
+	unwrap $eggnog
+eggnog_consumed
+unwrap "Hello"
 
+
+$var = 1
+if $var == 1 then
+	unwrap "1True"
+elf
+	unwrap "2False"
+eggnog_consumed
+unwrap "2Hello"
+
+unwrap "Hello word"
+unwrap 2+2 

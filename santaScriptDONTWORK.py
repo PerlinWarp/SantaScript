@@ -6,9 +6,6 @@ stack = []
 #Symbol table for variable assignment
 symbols = {}
 
-#IF ELF COUNTER
-global ifelf
-
 #Opens the file to be interpreted
 def open_file(filename):
 	data = open(filename, "r").read()
@@ -32,19 +29,14 @@ def lex(filecontents):
 	varStarted = False #To define variables 
 	var = ""
 	
-	# How many elf statements are there
-	global ifelf
-	ifelf = 0
-
 	filecontents = list(filecontents)
 	for char in filecontents:
 		tok += char #Adding every letter to token to make it make sence
 		if (tok == "elf" or tok == "ELF"):
 			tokens.append("ELF")
-			ifelf +=1
 			tok = ""
-		elif (tok == "EGGNOG_CONSUMED" or tok == "EGGNOG_CONSUMED"):
-			tokens.append("EGGNOG_CONSUMED")
+		elif (tok == "endif" or tok == "ENDIF"):
+			tokens.append("ENDIF")
 			tok = ""
 		elif (tok == " "):
 			if (state == 0):
@@ -94,8 +86,8 @@ def lex(filecontents):
 			#print("Found a print")
 			tokens.append("UNWRAP")
 			tok = "" ##Reset token
-		elif (tok == "eggnog_consumed" or tok == "EGGNOG_CONSUMED"):
-			tokens.append("EGGNOG_CONSUMED")
+		elif (tok == "ENDIF" or tok == "endif"):
+			tokens.append("endif")
 			tok = ""
 		elif (tok == "IF" or tok == "if"):
 			tokens.append("IF")
@@ -160,21 +152,14 @@ def getVARIABLE(varname):
 
 #Parser
 def parse(toks):
-	global ifelf
 	print("STARTING PARSING")
 	print(toks)
+	condition = False
 	i = 0 
 	while (i < len(toks)):
-		condition = False
-		##IF ELF STATEMENTS
-		#print(toks[i])
-		if (condition == False and toks[i] == "ELF"):
-			print("Run the elf statement")
-			i+=1
-		elif (condition == True and toks[i] == "ELF"):
-			i+=(toks.index("EGGNOG_CONSUMED") - i)
+		#if(toks[i] == "ELF"):
 
-		elif(toks[i] == "EGGNOG_CONSUMED"):
+		if(toks[i] == "ENDIF"):
 			#print("Found an end if")
 			i+=1
 		#print("DOES THIS EVER END? " + (str(i)) + "len(toks) " + str(len(toks)))
@@ -198,7 +183,6 @@ def parse(toks):
 			elif(toks[i+2][0:3] == "VAR"):
 					doASSIGN(toks[i], getVARIABLE(toks[i+2]))
 			i+=3 #As we used 3 tokesn
-		#IF STATEMENT
 		elif (toks[i] + " " + toks[i+1][0:3] + " " + toks[i+2] + " " + toks[i+3][0:3] + " " + toks[i + 4] == "IF NUM EQEQ NUM THEN"):
 			#print("Found an if statement")
 			#Checking if the if statement is true
@@ -209,8 +193,8 @@ def parse(toks):
 				condition = False
 				#print("tokens = " + str(toks))
 				#print("i = " + str(i))
-				i += (toks.index("EGGNOG_CONSUMED") - i)
-				print(toks.index("EGGNOG_CONSUMED"))
+				i += (toks.index("ENDIF") - i)
+				print(toks.index("ENDIF"))
 			print(str(condition))
 		elif (toks[i] + " " + toks[i+1][0:3] + " " + toks[i+2] + " " + toks[i+3][0:3] + " " + toks[i + 4] == "IF VAR EQEQ NUM THEN"):
 			#print("Found an if statement")
@@ -220,16 +204,9 @@ def parse(toks):
 				i += 5
 			else:
 				condition = False
-				#if (ifelf == 0):
-				#if (elf in toks):
-				#	i += toks.index
-				#elif (EGGNOG_CONSUMED):
-				#	i + (tokes.index(EGGNOG_CONSUMED))
-				if (ifelf != 0):
-					itelf =-1
-					i += (toks.index("ELF") - i)
-				elif (toks.index("EGGNOG_CONSUMED")):
-					i += (toks.index("EGGNOG_CONSUMED") - i)
+				i += (toks.index("ENDIF") - i)
+
+		
 
 	#Debugging		
 	print("SYMBOL TABLE = " + str(symbols))
