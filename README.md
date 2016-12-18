@@ -1,12 +1,12 @@
 # SherryScript
 <p>
-Features:
-	unwrapping numbers, evaluations, strings. 
-	Declaring variables. 
-	Cannot unwrap variables. 
-To add a new function. 
-1. Add a new elif statement in the Lexer
-2. Add a new if statement to parse it 
+Features: <br>
+	unwrapping numbers, evaluations, strings. <br>
+	Declaring variables. <br>
+	Cannot unwrap variables. <br>
+To add a new function. <br>
+1. Add a new elif statement in the Lexer <br>
+2. Add a new if statement to parse it <br>
 </p>
 #Code examples
 ```
