@@ -6,4 +6,4 @@ Features:
 	Cannot unwrap variables. 
 To add a new function. 
 1. Add a new elif statement in the Lexer
-2. Parse it
+2. Add a new if statement to parse it 

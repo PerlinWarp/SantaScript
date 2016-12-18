@@ -1,2 +1,9 @@
 if 1 == 1 then
-	unwrap "hello world"
+	unwrap "hello"
+	unwrap "world"
+	$var = 10 + 4 * 2
+	unwrap $var
+endif
+unwrap "After the end if"
+$var = "Hello World"
+unwrap $var

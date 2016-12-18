@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from sys import *
 
 tokens = [] #List of tokens
@@ -31,7 +32,10 @@ def lex(filecontents):
 	filecontents = list(filecontents)
 	for char in filecontents:
 		tok += char #Adding every letter to token to make it make sence
-		if (tok == " "):
+		if (tok == "endif" or tok == "ENDIF"):
+			tokens.append("ENDIF")
+			tok = ""
+		elif (tok == " "):
 			if (state == 0):
 			##If there isnt a string null the space
 				tok = ""
@@ -146,10 +150,14 @@ def getVARIABLE(varname):
 #Parser
 def parse(toks):
 	print(toks)
-	i = 0 #Idk why he isnt using a for loop
+	condition = False
+	i = 0 
 	while (i < len(toks)):
+		if(toks[i] == "ENDIF"):
+			#print("Found an end if")
+			i+=1
 		#print("DOES THIS EVER END? " + (str(i)) + "len(toks) " + str(len(toks)))
-		if(toks[i] + " " + toks[i+1][0:6] == "UNWRAP STRING" or toks[i] + " " + toks[i+1][0:3] == "UNWRAP NUM" or toks[i] + " " + toks[i+1][0:4] == "UNWRAP EXPR" or toks[i] + " " + toks[i+1][0:3] == "UNWRAP VAR"):
+		elif(toks[i] + " " + toks[i+1][0:6] == "UNWRAP STRING" or toks[i] + " " + toks[i+1][0:3] == "UNWRAP NUM" or toks[i] + " " + toks[i+1][0:4] == "UNWRAP EXPR" or toks[i] + " " + toks[i+1][0:3] == "UNWRAP VAR"):
 			if(toks[i+1][0:6] == "STRING"):
 					doPRINT(toks[i+1]) #Prints the 6 character onwards
 			elif(toks[i+1][0:3]== "NUM"):
@@ -173,10 +181,16 @@ def parse(toks):
 			print("Found an if statement")
 			#Checking if the if statement is true
 			if (toks[i+1][4:] == toks[i+3][4:]):
-				print("True")
+				condition = True
+				i += 5
 			else:
-				print("False")
-			i += 5
+				condition = False
+				#print("tokens = " + str(toks))
+				#print("i = " + str(i))
+				i += (toks.index("ENDIF") - i)
+				print(toks.index("ENDIF"))
+			print(str(condition))
+			
 	print(symbols)
 def run():
 	data = open_file(argv[1])
