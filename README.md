@@ -9,9 +9,10 @@ To add a new function.
 2. Add a new if statement to parse it 
 
 #Code examples
+'''
 $var = 1
 if $var == 1 then
 	unwrap "True"
 endif
 unwrap "Hello world"
-
+'''
