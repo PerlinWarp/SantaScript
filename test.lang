@@ -1,6 +1,7 @@
-$var = 1
+$var = 2
 if $var == 1 then
 	unwrap "True"
+elf
+	unwrap "False"
 endif
-unwrap "Hello world"
 

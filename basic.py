@@ -205,9 +205,11 @@ def parse(toks):
 	#Debugging		
 	print("SYMBOL TABLE = " + str(symbols))
 def run():
+	if(len(argv) != 2):
+		print("Usage: ./SantaScript test.lang")
+		quit()
 	data = open_file(argv[1])
 	toks = lex(data) #Gets the tokens from the lex
 	#Parser runs the tokens
 	parse(toks)
-
 run()
