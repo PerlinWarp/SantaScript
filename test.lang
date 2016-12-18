@@ -1,2 +1,2 @@
-$variable = 10 + 4
-UNWRAP $variable
+if 1 == 1 then
+	unwrap "hello world"

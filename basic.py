@@ -51,11 +51,17 @@ def lex(filecontents):
 				varStarted = False
 			tok = ""
 		elif (tok == "=" and state == False):
+			if(expr != "" and isexpr == 0):
+				tokens.append("NUM:" + expr)
+				expr = ""
 			if var != "":
 				tokens.append("VAR:" + var)
 				var = ""
 				varStarted = False
-			tokens.append("EQUALS")
+			if (tokens[-1] == "EQUALS"):
+				tokens[-1] = "EQEQ" #Replace EQUALS with EQEQ for ==
+			else:
+				tokens.append("EQUALS")
 			tok = ""
 		elif (tok == "$" and state == False): ##
 			varStarted = True
@@ -73,6 +79,18 @@ def lex(filecontents):
 			#print("Found a print")
 			tokens.append("UNWRAP")
 			tok = "" ##Reset token
+		elif (tok == "ENDIF" or tok == "endif"):
+			tokens.append("endif")
+			tok = ""
+		elif (tok == "IF" or tok == "if"):
+			tokens.append("IF")
+			tok = ""
+		elif (tok == "THEN" or tok == "then"):
+			if (expr != "" and isexpr == 0):
+				tokens.append("NUM:" + expr)
+				expr = ""
+			tokens.append("THEN")
+			tok = ""
 		elif  (tok == "0" or tok == "1" or tok == "2" or tok == "3" or tok == "4" or tok == "5" or tok == "6" or tok == "7" or tok == "8" or tok == "9"):
 			#If the token is a number
 			expr += tok
@@ -83,6 +101,8 @@ def lex(filecontents):
 			isexpr = True
 			expr += tok
 			tok = ""
+		elif (tok == "\t"):
+			tok = "" #Ignore tabs 
 		elif tok == "\"": #Found a string
 			if state == 0:
 				state = 1
@@ -149,6 +169,14 @@ def parse(toks):
 			elif(toks[i+2][0:3] == "VAR"):
 					doASSIGN(toks[i], getVARIABLE(toks[i+2]))
 			i+=3 #As we used 3 tokesn
+		elif (toks[i] + " " + toks[i+1][0:3] + " " + toks[i+2] + " " + toks[i+3][0:3] + " " + toks[i + 4] == "IF NUM EQEQ NUM THEN"):
+			print("Found an if statement")
+			#Checking if the if statement is true
+			if (toks[i+1][4:] == toks[i+3][4:]):
+				print("True")
+			else:
+				print("False")
+			i += 5
 	print(symbols)
 def run():
 	data = open_file(argv[1])
