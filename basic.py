@@ -118,7 +118,6 @@ def doASSIGN(varname, varvalue):
 def getVARIABLE(varname):
 	varname = varname[4:]
 	if varname in symbols:
-		print("TRUE")
 		return symbols[varname]
 	else:
 		return("VARIABLE ERROR: Undefined Variable")
@@ -137,7 +136,7 @@ def parse(toks):
 					doPRINT(toks[i+1])
 			elif(toks[i+1][0:4]== "EXPR"):
 					doPRINT(toks[i+1])
-			elif(toks[i+1][0:4]== "VAR"):
+			elif(toks[i+1][0:3]== "VAR"):
 					doPRINT(getVARIABLE(toks[i+1]))
 			i+=2 # As we used 2 tokens
 		elif (toks[i][0:3] + " " + toks[i + 1] + " " + toks[i + 2][0:6] == "VAR EQUALS STRING" or toks[i][0:3] + " " + toks[i + 1] + " " + toks[i + 2][0:3] == "VAR EQUALS NUM" or toks[i][0:3] + " " + toks[i + 1] + " " + toks[i + 2][0:4] == "VAR EQUALS EXPR" or toks[i][0:3] + " " + toks[i + 1] + " " + toks[i + 2][0:3] == "VAR EQUALS VAR"):

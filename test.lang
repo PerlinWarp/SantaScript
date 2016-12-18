@@ -1,4 +1,2 @@
-$variable = 10 + 3
-UNWRAP $variable
-$variable = "HELLO"
+$variable = 10 + 4
 UNWRAP $variable
