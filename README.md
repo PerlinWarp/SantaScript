@@ -1,10 +1,12 @@
-# SherryScript
+# SantaScript
 
 ##Features:
 <p>
 	unwrapping numbers, evaluations, strings. <br>
 	Declaring variables. <br>
-	Cannot unwrap variables. <br>
+	print variables. <br>
+	if statements <br>
+	if elf statements <br>
 To add a new function. <br>
 1. Add a new elif statement in the Lexer <br>
 2. Add a new if statement to parse it <br>
