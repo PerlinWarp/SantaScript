@@ -15,7 +15,7 @@ To add a new function. <br>
 ```
 $var = 1
 if $var == 1 then
-	unwrap "True"
+	unwrap "Nice"
 eggnog_consumed
 unwrap "Hello world"
 ```
