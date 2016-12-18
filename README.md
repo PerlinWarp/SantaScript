@@ -1,6 +1,7 @@
 # SherryScript
+
+##Features:
 <p>
-Features: <br>
 	unwrapping numbers, evaluations, strings. <br>
 	Declaring variables. <br>
 	Cannot unwrap variables. <br>
