@@ -16,6 +16,6 @@ To add a new function. <br>
 $var = 1
 if $var == 1 then
 	unwrap "True"
-endif
+eggnog_consumed
 unwrap "Hello world"
 ```
