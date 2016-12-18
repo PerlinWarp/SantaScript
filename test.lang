@@ -1,9 +1,6 @@
-if 1 == 1 then
-	unwrap "hello"
-	unwrap "world"
-	$var = 10 + 4 * 2
-	unwrap $var
+$var = 1
+if $var == 1 then
+	unwrap "True"
 endif
-unwrap "After the end if"
-$var = "Hello World"
-unwrap $var
+unwrap "Hello world"
+
